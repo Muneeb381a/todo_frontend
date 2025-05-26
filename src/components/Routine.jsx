@@ -11,7 +11,7 @@ const Routine = () => {
     const fetchRoutines = async () => {
       try {
         const response = await axios.get("http://localhost:5002/v1/api/all-routines");
-        setRoutines(response?.data?.data || []); // Adjust if your API wraps routines in data
+        setRoutines(response?.data?.data || []); 
         setLoading(false);
       } catch (err) {
         console.error("Error while getting all the routines", err);
@@ -24,11 +24,11 @@ const Routine = () => {
   }, []);
     
   return (
-    <div className="text-xl text-white">
-      <ul>
+    <div className="text-xl text-white min-h-screen flex justify-center items-center gap-5">
+      <ul className='bg-blue-500 p-5 rounded-2xl'>
         {routines.map((routine) => (
-          <li key={routine.id}>
-            <span>{routine.title}</span>: <span>{routine.description}</span>
+          <li key={routine.id} className='flex gap-10 mb-5'>
+            <span className='bg-indigo-950 p-2'>{routine.title}</span>: <span className='bg-indigo-950 p-2'>{routine.description}</span>
           </li>
         ))}
       </ul>

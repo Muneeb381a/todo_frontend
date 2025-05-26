@@ -25,10 +25,10 @@ const Routine = () => {
     
   return (
     <div className="text-xl text-white min-h-screen flex justify-center items-center gap-5">
-      <ul className='bg-blue-500 p-5 rounded-2xl'>
+      <ul className='p-5 rounded-2xl'>
         {routines.map((routine) => (
           <li key={routine.id} className='flex gap-10 mb-5'>
-            <span className='bg-indigo-950 p-2'>{routine.title}</span>: <span className='bg-indigo-950 p-2'>{routine.description}</span>
+            <span className='bg-indigo-950 p-2 rounded border border-orange-400'>{routine.title}</span>: <span className='bg-indigo-950 p-2'>{routine.description}</span>
           </li>
         ))}
       </ul>

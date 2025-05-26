@@ -22,6 +22,15 @@ const Routine = () => {
 
     fetchRoutines();
   }, []);
+
+  if(loading) {
+    return (
+        <div>
+            <p className='text-2xl text-orange-400'>Loading....</p>
+        </div>
+    )
+    
+  }
     
   return (
     <div className="text-xl text-white min-h-screen flex justify-center items-center gap-5">

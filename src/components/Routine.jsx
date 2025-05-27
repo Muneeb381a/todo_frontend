@@ -7,7 +7,7 @@ const Routine = () => {
     
   return (
     <div>
-        {res?.data.data.map((d) => (
+        {res?.data?.data.map((d) => (
             <h1 key={d.id}>{d.title}</h1>
         ))}
     </div>

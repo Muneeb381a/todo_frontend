@@ -1,56 +1,17 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from 'react'
+import { useGetAllRoutinesQuery } from '../app/service/apiData'
 
 const Routine = () => {
-  const [routines, setRoutines] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchRoutines = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:5002/v1/api/all-routines"
-        );
-        setRoutines(response?.data?.data || []);
-        setLoading(false);
-      } catch (err) {
-        console.error("Error while getting all the routines", err);
-        setError("Failed to fetch routines.");
-        setLoading(false);
-      }
-    };
-
-    fetchRoutines();
-  }, []);
-
-  if (loading) {
-    return (
-      <div class="🤚">
-        <div class="👉"></div>
-        <div class="👉"></div>
-        <div class="👉"></div>
-        <div class="👉"></div>
-        <div class="🌴"></div>
-        <div class="👍"></div>
-      </div>
-    );
-  }
-
+    const res = useGetAllRoutinesQuery()
+    console.log(res);
+    
   return (
-    <div className="text-xl text-white min-h-screen flex justify-center items-center gap-5">
-      <ul className="p-5 rounded-2xl">
-        {routines.map((routine) => (
-          <li key={routine.id} className="flex gap-10 mb-5">
-            <span className="bg-indigo-950 p-2 rounded border border-orange-400">
-              {routine.title}
-            </span>
-            : <span className="bg-indigo-950 p-2">{routine.description}</span>
-          </li>
+    <div>
+        {res?.data.data.map((d) => (
+            <h1 key={d.id}>{d.title}</h1>
         ))}
-      </ul>
     </div>
-  );
-};
+  )
+}
 
-export default Routine;
+export default Routine

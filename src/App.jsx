@@ -2,6 +2,7 @@ import React from 'react'
 import DailyRoutine from './components/DailyRoutine'
 import DailyRoutineForm from './components/DailyRoutineForm'
 import Routine from './components/Routine'
+import Name from './components/Name'
 
 const App = () => {
   return (
@@ -9,6 +10,7 @@ const App = () => {
       <DailyRoutine/>
       <DailyRoutineForm/>
       <Routine />
+      <Name />
     </div>
   )
 }

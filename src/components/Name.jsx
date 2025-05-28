@@ -14,7 +14,7 @@ const Name = () => {
 
   return (
     <div>
-      <label htmlFor="names" className="block mb-2 text-lg font-medium">
+      <label htmlFor="names" className="block mb-2 text-lg font-medium w-full">
         Select Name
       </label>
 
@@ -22,11 +22,11 @@ const Name = () => {
         id="names"
         value={selected}
         onChange={handleChange}
-        className="border px-4 py-2 rounded"
+        className="border px-4 py-3 rounded w-full bg-blue-400 cursor-pointer"
       >
         <option value=""> Select Name</option>
         {res?.data?.data?.map((name) => (
-          <option key={name.id} value={name.name}>
+          <option key={name.id} value={name.name} className="text-orange-500 hover:text-orange-800 cursor-pointer">
             {name.name}
           </option>
         ))}

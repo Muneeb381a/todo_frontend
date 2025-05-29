@@ -1,36 +1,57 @@
 import React, { useState } from "react";
-import { useGetAllNamesQuery } from "../app/service/nameData";
+import CreatableSelect from "react-select/creatable";
+import {
+  useCreateNameMutation,
+  useGetAllNamesQuery,
+} from "../app/service/nameData";
 
 const Name = () => {
-  const [selected, setSelected] = useState("");
+  const { data, isLoading, isError, refetch } = useGetAllNamesQuery();
+  const [createName] = useCreateNameMutation();
+  const [selectOptions, setSelectOptions] = useState(null);
 
-  const res = useGetAllNamesQuery();
+  const names = data?.data || [];
 
-  console.log(res);
+  const options = names.map((name) => ({
+    value: name.name,
+    label: name.name,
+  }));
 
-  const handleChange = (e) => {
-    setSelected(e.target.value);
+  const handleChange = (selected) => {
+    setSelectOptions(selected);
   };
 
-  return (
-    <div>
-      <label htmlFor="names" className="block mb-2 text-lg font-medium w-full">
-        Select Name
-      </label>
+  const handleCreate = async (inputValue) => {
+    try {
+      await createName({ name: inputValue }).unwrap();
+      const newOption = { value: inputValue, label: inputValue };
+      setSelectOptions(newOption);
+      refetch(); // Refresh list
+    } catch (err) {
+      console.error("Failed to create name", err);
+    }
+  };
 
-      <select
-        id="names"
-        value={selected}
+  if (isLoading) return <p>Loading...</p>;
+  if (isError) return <p>Error fetching names</p>;
+
+  return (
+    <div className="max-w-md mx-auto">
+      <label className="block mb-2 text-lg font-medium">
+        Select or Create Name
+      </label>
+      <CreatableSelect
+        isClearable
         onChange={handleChange}
-        className="border px-4 py-3 rounded w-full bg-blue-400 cursor-pointer"
-      >
-        <option value=""> Select Name</option>
-        {res?.data?.data?.map((name) => (
-          <option key={name.id} value={name.name} className="text-orange-500 hover:text-orange-800 cursor-pointer">
-            {name.name}
-          </option>
-        ))}
-      </select>
+        onCreateOption={handleCreate}
+        options={options}
+        value={selectOptions}
+      />
+      {selectOptions && (
+        <p className="mt-2 text-green-600">
+          You Selected: <strong>{selectOptions.label}</strong>
+        </p>
+      )}
     </div>
   );
 };
